@@ -2,6 +2,10 @@
 
 > A sleek, modern authentication system that remembers you! Built with pure JavaScript magic ✨
 
+## 🚀 [Live Demo](https://xzegas.github.io/smart-login-system/)
+
+Try it out now and experience the magic yourself! ✨
+
 ![Smart Login System Demo](https://i.imgur.com/z0sRhel.png)
 
 ## 🌟 Why Choose Smart Login?
