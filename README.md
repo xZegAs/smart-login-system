@@ -2,7 +2,7 @@
 
 > A sleek, modern authentication system that remembers you! Built with pure JavaScript magic ✨
 
-![Smart Login System Demo](https://imgur.com/a/l9zCD8J)
+![Smart Login System Demo](https://i.imgur.com/z0sRhel.png)
 
 ## 🌟 Why Choose Smart Login?
 
