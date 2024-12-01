@@ -21,21 +21,12 @@ var loginButton = document.querySelector("#loginForm .btn-primary");
 var logoutButton = document.querySelector(".btn-outline-light");
 
 var PASSWORD_MIN_LENGTH = 8;
-var NAME_MIN_LENGTH = 3;
-var NAME_MAX_LENGTH = 50;
-
 var PASSWORD_RULES = {
   minLength: PASSWORD_MIN_LENGTH,
   hasUpperCase: /[A-Z]/,
   hasLowerCase: /[a-z]/,
   hasNumbers: /\d/,
   hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/,
-};
-
-var NAME_RULES = {
-  minLength: NAME_MIN_LENGTH,
-  maxLength: NAME_MAX_LENGTH,
-  validChars: /^[a-zA-Z\s'-]+$/,
 };
 
 function updatePageTitle(page) {
@@ -53,41 +44,6 @@ function updatePageTitle(page) {
     default:
       document.title = baseTitle;
   }
-}
-
-function isValidName(name) {
-  var errors = [];
-
-  if (!name || name.trim().length === 0) {
-    errors.push("Name is required");
-  } else {
-    if (name.length < NAME_RULES.minLength) {
-      errors.push(
-        "Name must be at least " + NAME_RULES.minLength + " characters long"
-      );
-    }
-    if (name.length > NAME_RULES.maxLength) {
-      errors.push("Name cannot exceed " + NAME_RULES.maxLength + " characters");
-    }
-    if (!NAME_RULES.validChars.test(name)) {
-      errors.push(
-        "Name can only contain letters, spaces, hyphens, and apostrophes"
-      );
-    }
-    if (/\s{2,}/.test(name)) {
-      errors.push("Name cannot contain consecutive spaces");
-    }
-    if (/^[-'\s]|[-'\s]$/.test(name)) {
-      errors.push(
-        "Name cannot start or end with spaces, hyphens, or apostrophes"
-      );
-    }
-  }
-
-  return {
-    isValid: errors.length === 0,
-    errors: errors,
-  };
 }
 
 function isValidEmail(email) {
@@ -177,17 +133,11 @@ function clearCurrentUser() {
 
 function handleRegister(e) {
   e.preventDefault();
-  var name = registerName.value.trim();
+  var name = registerName.value;
   var email = registerEmail.value;
   var password = registerPassword.value;
 
-  var nameValidation = isValidName(name);
-  if (!nameValidation.isValid) {
-    showMessage(registerMessage, nameValidation.errors.join("\n"), true);
-    return;
-  }
-
-  if (!email || !password) {
+  if (!name || !email || !password) {
     showMessage(registerMessage, "Please fill in all fields", true);
     return;
   }
@@ -307,23 +257,6 @@ function setupPasswordValidation() {
   });
 }
 
-function setupNameValidation() {
-  registerName.addEventListener("input", function () {
-    var name = this.value.trim();
-    var validation = isValidName(name);
-
-    if (name.length > 0) {
-      showMessage(
-        registerMessage,
-        validation.isValid ? "Name is valid!" : validation.errors.join("\n"),
-        !validation.isValid
-      );
-    } else {
-      registerMessage.classList.add("d-none");
-    }
-  });
-}
-
 function preventFormSubmission(form) {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -334,7 +267,6 @@ function preventFormSubmission(form) {
 document.addEventListener("DOMContentLoaded", function () {
   setupInputEffects();
   setupPasswordValidation();
-  setupNameValidation();
 
   if (currentUser) {
     welcomeMessage.textContent = "Welcome, " + currentUser.name + "!";
